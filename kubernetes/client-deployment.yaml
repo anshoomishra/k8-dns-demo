@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-service
+  labels:
+    app: client-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client-service
+  template:
+    metadata:
+      labels:
+        app: client-service
+    spec:
+      containers:
+        - name: client-service
+          image: k8s-dns-demo/client-service:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: USER_SERVICE_URL
+              value: http://user-service:8000/api/users/
